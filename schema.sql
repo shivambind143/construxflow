@@ -1,6 +1,10 @@
 -- Create Database
 CREATE DATABASE IF NOT EXISTS construxflow;
 USE construxflow;
+SHOW DATABASES;
+SHOW TABLES;
+SELECT * FROM users;
+
 
 -- Users Table
 CREATE TABLE IF NOT EXISTS users (
