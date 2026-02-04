@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Dashboard - ConstruxFlow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="brand">ConstruxFlow</div>
+                <nav class="nav flex-column">
+                    <a class="nav-link active" href="/contractor/dashboard">My Projects</a>
+                    <a class="nav-link" href="/contractor/add-project">Add Project</a>
+                    <a class="nav-link" href="/contractor/applications">Applications</a>
+                    <a class="nav-link" href="/contractor/materials">Materials</a>
+                    <a class="nav-link" href="/contractor/material-requests">My Requests</a>
+                    <a class="nav-link" href="/logout">Logout</a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <div class="header">
+                    <h3>My Projects</h3>
+                    <p class="mb-0">Welcome back, <%= userName %>!</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Active Projects</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (projects.length === 0) { %>
+                            <p class="text-muted">No projects yet. <a href="/contractor/add-project">Create your first project</a></p>
+                        <% } else { %>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Location</th>
+                                            <th>Worker Type</th>
+                                            <th>Workers Needed</th>
+                                            <th>Salary</th>
+                                            <th>Posted On</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% projects.forEach(project => { %>
+                                            <tr>
+                                                <td><%= project.description %></td>
+                                                <td><%= project.location %></td>
+                                                <td><%= project.worker_type %></td>
+                                                <td><%= project.workers_required %></td>
+                                                <td>₹<%= project.salary.toLocaleString() %></td>
+                                                <td><%= new Date(project.created_at).toLocaleDateString() %></td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

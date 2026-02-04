@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications - ConstruxFlow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="brand">ConstruxFlow</div>
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="/contractor/dashboard">My Projects</a>
+                    <a class="nav-link" href="/contractor/add-project">Add Project</a>
+                    <a class="nav-link active" href="/contractor/applications">Applications</a>
+                    <a class="nav-link" href="/contractor/materials">Materials</a>
+                    <a class="nav-link" href="/contractor/material-requests">My Requests</a>
+                    <a class="nav-link" href="/logout">Logout</a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <div class="header">
+                    <h3>Worker Applications</h3>
+                    <p class="mb-0">Manage applications to your projects</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">All Applications</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (applications.length === 0) { %>
+                            <p class="text-muted">No applications yet.</p>
+                        <% } else { %>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Worker Name</th>
+                                            <th>Email</th>
+                                            <th>Project</th>
+                                            <th>Applied On</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% applications.forEach(app => { %>
+                                            <tr>
+                                                <td><%= app.worker_name %></td>
+                                                <td><%= app.worker_email %></td>
+                                                <td><%= app.project_description.substring(0, 50) %>...</td>
+                                                <td><%= new Date(app.created_at).toLocaleDateString() %></td>
+                                                <td>
+                                                    <span class="badge badge-<%= app.status %>">
+                                                        <%= app.status.toUpperCase() %>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <% if (app.status === 'pending') { %>
+                                                        <form action="/contractor/applications/update" method="POST" style="display: inline;">
+                                                            <input type="hidden" name="id" value="<%= app.id %>">
+                                                            <input type="hidden" name="status" value="accepted">
+                                                            <button type="submit" class="btn btn-sm btn-success">Accept</button>
+                                                        </form>
+                                                        <form action="/contractor/applications/update" method="POST" style="display: inline;">
+                                                            <input type="hidden" name="id" value="<%= app.id %>">
+                                                            <input type="hidden" name="status" value="rejected">
+                                                            <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                                                        </form>
+                                                    <% } else { %>
+                                                        -
+                                                    <% } %>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

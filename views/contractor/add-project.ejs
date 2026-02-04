@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Project - ConstruxFlow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <div class="brand">ConstruxFlow</div>
+                <nav class="nav flex-column">
+                    <a class="nav-link" href="/contractor/dashboard">My Projects</a>
+                    <a class="nav-link active" href="/contractor/add-project">Add Project</a>
+                    <a class="nav-link" href="/contractor/applications">Applications</a>
+                    <a class="nav-link" href="/contractor/materials">Materials</a>
+                    <a class="nav-link" href="/contractor/material-requests">My Requests</a>
+                    <a class="nav-link" href="/logout">Logout</a>
+                </nav>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-md-10 main-content">
+                <div class="header">
+                    <h3>Add New Project</h3>
+                    <p class="mb-0">Post a new job opportunity</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Project Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <% if (error) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= error %>
+                            </div>
+                        <% } %>
+                        
+                        <% if (success) { %>
+                            <div class="alert alert-success" role="alert">
+                                <%= success %>
+                            </div>
+                        <% } %>
+
+                        <form action="/contractor/add-project" method="POST">
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Project Description</label>
+                                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="location" class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="location" name="location" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="worker_type" class="form-label">Worker Type</label>
+                                    <input type="text" class="form-control" id="worker_type" name="worker_type" placeholder="e.g., Mason, Electrician, Plumber" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="workers_required" class="form-label">Workers Required</label>
+                                    <input type="number" class="form-control" id="workers_required" name="workers_required" min="1" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="salary" class="form-label">Salary (₹)</label>
+                                    <input type="number" class="form-control" id="salary" name="salary" min="0" step="0.01" required>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Post Project</button>
+                            <a href="/contractor/dashboard" class="btn btn-secondary">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
